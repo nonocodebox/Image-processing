@@ -1,0 +1,16 @@
+Matlab version: R2012a
+Platform: Windows 8, 64 bit.
+
+Files included (all are functions):
+--------------
+1.  DFT.m - Transforms 1D signal to Fourier 1D base.
+2.  IDFT.m - Reverses 1D Fourier transform into signal space.
+3.  DFT2.m - Transforms 2D signal to Fourier 2D base.
+4.  IDFT2.m - Reverses 2D Fourier transform into signal space.
+5.  convDerivative.m - Returns a derivative magnitude's of an image
+						 using convolution with [1 0 -1] and [1 ; 0 ; -1].
+6.  fourierDerivative.m  - Derives an image in Fourier space.
+7.  createGaussianFilter.m - Creates a Gaussian filter with kernelSize.
+8.  blurInImageSpace.m - Blurs an image with a Gaussian convolution.
+9.  blurInFourierSpace.m - Blurs an image with a Gaussian in Fourier space.
+10. README - This file.
