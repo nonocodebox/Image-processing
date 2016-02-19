@@ -1,0 +1,23 @@
+Matlab version: R2012a
+Platform: Windows 8, 64 bit.
+
+Files included:
+--------------
+1. 	imReadAndConvert.m - Converts RGB image to gray scale.
+2.  Create1DGaussianFilter.m - Creates a binomial coefficient vector by a given size.
+3.  Expand.m - Expands a given image by 2, using zero padding and blurring.
+4.  Reduce.m - Reduces a given image by 2, using blurring and sampling.
+5.  GaussianPyramid.m - Builds a Gaussian pyramid pyramid.
+6.  LaplacianPyramid.m - Builds a Laplacian pyramid.
+7.  LaplacianToImage.m  - Builds the original image from a Laplacian pyramid.
+8.  renderPyramid.m - Builds a pyramid display.
+9.  displayPyramid.m - Displays renderPyramid's output.
+10. pyramidBlending.m - Blends two gray scale images.
+11. BlendRGBImages.m - Blends two RGB images.
+12. blendingExample1.m - A blending example.
+13. blendingExample2.m - A blending example.
+14. bird2b.jpg - Image 1 example 2.
+15. baboon1b.jpg - Image 2 example 2.
+16. baboon-mask11.jpg - Mask example 2.
+17. README - This file.
+	
