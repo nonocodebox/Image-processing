@@ -1,0 +1,17 @@
+Matlab version: R2012a
+Platform: Windows 8, 64 bit.
+
+Files included:
+===============
+1.  DWT.m           - DWT implementation. Converts a 2-dimensional discrete signal (image) to its
+                      wavelet transform coefficients.
+2.  IDWT.m          - IDWT implementation. Converts wavelet coefficients into the original image.
+3.  expand.m        - Expands a given image by 2, using zero padding and blurring.
+4.  reduce.m        - Reduces a given image by 2, using blurring and sampling.
+5.  quantizeImage.m - Performs quantization of an image to nQuants.
+6.  waveletQuantization.m - Performs quantization of the wavelet details coefficients
+7.  deleteHorizontal.m    - Deletes horizontal lines from an image.
+8.  denoising.m           - Denoises an image using DWT.
+9.  filterNoisyImage.m    - Filters myNoisyImage.png using denoising.m.
+10. myNoisyImage.png      - Image with added noise (Gaussian noise with 0.04 stdev) for denoising.
+11. README                - This file.
