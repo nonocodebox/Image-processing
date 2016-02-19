@@ -1,0 +1,30 @@
+Matlab version: R2012a
+Platform: Windows 8, 64 bit.
+
+Files included (all are functions):
+--------------
+1. imReadAndConvert.m - Converts RGB image to grayscale.
+						(1) indicates a grayscale image, (2) indicates a RGB image.
+2. imDisplay.m - Displays a picture returned from imReadAndConvert with coordinates
+				 and pixel intensity information.
+3. transformRGB2YIQ.m - Transforms a RGB image to YIQ.
+4. transformYIQ2RGB.m - Transforms a YIQ image to RGB.
+5. histogramEqualize.m - Calculates an image's histogram, an image after a histogram
+						 equalization and its histogram.
+6. quantizeImage.m  - Quantizes an image into nQuants.
+7. testImg1.jpg - a test image (3 colors).
+8. testImg2.jpg - a test image (rainbow colors).
+9. README - This file.
+
+Notes:
+-----
+Since we try to partition z(i) so that every bin will have approximately the same numer of pixels in
+it, there might be some errors in cases like:
+
+Histogram:              1   1   1   1   1   100000000
+Cumulative sum:         1   2   3   4   5   100000005
+Normelized cumulative:  0   0   0   0   0   255
+
+In this example we can't divide the initial bins equally since there is much more of the last color,
+and if we assume approx. the same number of colors for each bin we can only divide it into 2 bins
+(one for all of the first colors and the second for the last color).
