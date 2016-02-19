@@ -1,0 +1,112 @@
+﻿Matlab version: R2012a
+Platform: Windows 8, 64 bit.
+
+Files included:
+===============
+1.  barcodeBlending.m           - A barcode blending. Giving images input, the function builds blended panorama.
+2.  blendRGBImages.m            - Blends two RGB images.
+3.  blurInImageSpace.m          - Blurs an image with a Gaussian convolution.
+4.  calculatePanoramaSize.m     - Calculates the panorama size and offset given the images and transformations
+5.  calculatePanoramicBorders.m - Calculates the borders (corners) of the panorama strips, given the imges,
+                                  transformations, panorama size and slice centers.
+6.  convDerivative.m            - Returns a derivative magnitude’s of an image
+                                  using convolution with [1 0 -1] and [1 ; 0 ; -1].
+7.  create1DGaussianFilter.m    - Creates a binomial coefficient vector by a given size.
+8.  createStereoVideo.m         - This function gets an image directory and create a stereo movie with nViews.
+9.  expand.m                    - Expands a given image by 2, using zero padding and blurring.
+10. gaussianPyramid.m           - Builds a Gaussian pyramid.
+11. imageWarp.m                 - Backwarps a rectangle from an image using a given transformations
+                                  The rectangle to backwarp is identified by corners p1 and p2.
+12. imgToPanoramaCoordinates.m  - Transforms image i to the coordinates system of the panorama image.
+13. imReadAndConvert.m          - Converts RGB image to gray scale.
+14. laplacianPyramid.m          - Builds a Laplacian pyramid.
+15. laplacianToImage.m          - Builds the original image from a Laplacian pyramid.
+16. loadImages.m                - Read all images from directoryPath.
+17. lucasKanade.m               - LK algorithm, incluses ROT_FLAG which supports rotation.
+18. pyramidBlending.m           - Blends two gray scale images.
+19. reduce.m                    - Reduces a given image by 2, using blurring and sampling.
+20. renderPanoramicFrame.m      - Renders a panoramic frame.
+21. transform.m                 - Transforms coordinates using a transformation matrix.
+22. README                      - This file.
+
+
+IMPORTANT NOTES:
+================
+
+Bonus part:
+-----------
+My implementation supports rotation detection and barcode blending.
+This can be found under the "bonus" directory.
+The changes for implementing rotation and blending are:
+- Setting ROT_FLAG = 1 in createVideo.m
+- Setting USE_BARCODE = 1 in createVideo.m
+- Setting FRAME_CHECK_OK = 0 in renderPanoramicFrame.m
+
+
+Bad frame detection:
+--------------------
+Frame artifact checking is disabled in rotation mode since it causes some inputs to discard all frames.
+The algorithm should have worked OK with rotation too (it was designed specifically for that)
+but causes the input "hillel" to discard all frames, so it was disabled (it appears to work OK
+for hillelRot and apples). You can enable it by setting FRAME_CHECK_OK = 1 in renderPanoramicFrame.m
+and see the results.
+
+The algorithm for detecting bad frames (those with artifacts caused from strips at image
+borders) works as follows:
+1. Calculate all the strip corners in the panorama coordinate system using calculatePanoramaBorders.
+2. For each strip in the frame:
+2. a. We take all the source image corners in the source  image coordinate system.
+2. b. We transform all the corners of the frame to the source image coordinate system.
+2. c. Check if the strip overflows to the left:
+2. c. 1. Verify that the TL corner of the image is left to the TL-BL edge of the strip
+2. c. 2. Verify that the BL corner of the image is left to the TL-BL edge of the strip
+2. d. Check if the strip overflows to the right:
+2. d, 1. Verify that the TR corner of the image is right to the TR-BR edge of the strip
+2. d. 2. Verify that the BR corner of the image is right to the TR-BR edge of the strip
+2. d. Set frameNotOK and return if any verification failed
+
+
+LK convergence:
+---------------
+If LK doesn't converge in rotation detection mode, it will retry to converge in translation only mode.
+This is because sometimes in rotation mode, the motion detected until loop termination is very far away
+from the actual motion. Translation seems to find more relevant motion even if not converging.
+
+
+Panorama size and offset calculation:
+-------------------------------------
+The panorama size is calculated by transforming each image's corners to the panorama coordinates
+then taking the difference minimal and maximal X and Y values. The panorama offset is calculated
+by taking the minimal X and Y values.
+The transformation of the first image is then changed from the identity matrix to a translation
+matrix, translating all matrices by the offset to move them to a new coordinate system where (0,0)
+is in the top left corner.
+This allows all of the images to appear in the final panorama without getting outside of the borders
+and without having negative coordinates even for images going too up or too left.
+This also allows simple support for left-translation images.
+
+
+Left translation detection:
+---------------------------
+My stereo video implementation originally supported left translation. Since it was later written
+in the FAQ that there will only be right translation and that we should discard images going left,
+a check was added in createStereoVideo to remove those frames. If the check is removed then images
+advancing to the left should be correctly placed in the panorama.
+
+
+CONFIGURATION:
+==============
+There are some configuration variables in the scripts that allow changing the behaviour of the code.
+They are documented in the code itself, but the main ones are described here for quick access.
+
+PRINT_MODE (createStereoVideo.m, barcodeBlending.m, lucasKanade.m):
+    Allows enabling (1) or disabling (0) print commands to show progress.
+
+ROT_FLAG (createStereoVideo.m):
+    Allows enabling rotation detection in LK.
+
+USE_BARCODE (createStereoVideo.m):
+    Allows enabling barcode blending on frames.
+
+FRAME_CHECK_OK (renderPanoramicFrame.m):
+    Allows enabling the checking of good/bad frames (bad frames are the ones with artifacts).
